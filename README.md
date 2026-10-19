@@ -5,11 +5,16 @@
 **Project Status:** Completed  
 **Author:** Sushma Kafle
 
+
+## Project Title
+
+This project is a part of the ADS-509 course in the Applied Data Science Program at the University of San Diego.
+
 ## Project Introduction / Objective
 
-This project investigates how effectively different natural language processing approaches classify Steam game reviews as **positive or negative**. It compares a traditional machine learning baseline (TF-IDF + Logistic Regression), a fine-tuned transformer (DistilBERT), and a zero-shot generative language model (FLAN-T5 Small) on the same held-out test set.
+This project investigates how effectively different natural language processing approaches classify Steam game reviews as **positive or negative**. It compares a traditional machine learning baseline (TF-IDF + Logistic Regression), a fine-tuned transformer (DistilBERT) and a zero-shot generative language model (FLAN-T5 Small) on the same held-out test set.
 
-The goal is to evaluate whether more advanced language models improve sentiment classification and whether a generative model can provide useful predictions without task-specific training. These findings can inform how gaming platforms, developers, and analysts summarize large volumes of player feedback.
+The goal is to evaluate whether more advanced language models improve sentiment classification and whether a generative model can provide useful predictions without task-specific training. These findings can inform how gaming platforms, developers and analysts summarize large volumes of player feedback.
 
 ## Project Description
 
@@ -153,4 +158,4 @@ No license has been selected yet. **All rights reserved** unless a license is ex
 
 ## Acknowledgments
 
-Thanks to the University of San Diego Applied Data Science program for the course framework; Valve/Steam for providing review data through its API; and the open-source Python, scikit-learn, PyTorch, and Hugging Face communities. An AI assistant was used to support troubleshooting, clarify technical issues, and organize the analysis; suggestions and model outputs were checked during the project.
+Thanks to the University of San Diego Applied Data Science program for the course framework; Valve/Steam for providing review data through its API; and the open-source Python, scikit-learn, PyTorch and Hugging Face communities. An AI assistant was used to support troubleshooting, clarify technical issues and organize the analysis; suggestions and model outputs were checked during the project.
