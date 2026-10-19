@@ -1,6 +1,6 @@
 # Steam Game Review Sentiment Analysis: Machine Learning vs. Transformers
 
-**Course:** ADS-509 — Applied Large Language Models for Data Science  
+**Course:** ADS-509 : Applied Large Language Models for Data Science  
 **Program:** Master of Applied Data Science, University of San Diego  
 **Project Status:** Completed  
 **Author:** Sushma Kafle
