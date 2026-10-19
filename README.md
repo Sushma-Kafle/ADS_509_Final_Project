@@ -30,7 +30,7 @@ Reviews were collected using the **Steam Reviews API** for five games spanning d
 
 The collection process used cursor-based pagination and sought a roughly balanced sample of positive and negative recommendations for each game. Reviews were combined, deduplicated using review identifiers, and cleaned. Six predominantly Chinese-language reviews were removed after the API's English-language filter returned some non-English text. The original review text was preserved alongside a normalized text column.
 
-**Final dataset:** 4,869 reviews — **2,453 positive** and **2,416 negative**. Sentiment labels were derived from Steam's user recommendation indicator rather than manually annotated review text.
+**Final dataset:** 4,869 reviews  **2,453 positive** and **2,416 negative**. Sentiment labels were derived from Steam's user recommendation indicator rather than manually annotated review text.
 
 ### Key data fields
 
