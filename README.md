@@ -143,14 +143,14 @@ Modify notebook cells to change game IDs, data collection targets, preprocessing
 
 ## Repository Files
 
-- `Final_Project.ipynb` — data collection, EDA, model training, and evaluation notebook (rename the final notebook to this before pushing, if desired).
-- `README.md` — project documentation.
-- `data/steam/` — generated raw and cleaned data files, if included.
-- Saved model folders and intermediate outputs — generated locally; large files need not be committed.
+- `Final_Project.ipynb` : data collection, EDA, model training, and evaluation notebook (rename the final notebook to this before pushing, if desired).
+- `README.md` : project documentation.
+- `data/steam/` : generated raw and cleaned data files, if included.
+- Saved model folders and intermediate outputs : generated locally; large files need not be committed.
 
 ## Contributors
 
-**Sushma Kafle** — individual project.
+**Sushma Kafle** : individual project.
 
 ## License
 
