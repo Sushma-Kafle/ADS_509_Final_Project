@@ -1,161 +1,153 @@
-# Steam Game Review Sentiment Analysis: Machine Learning vs. Transformers
+<div align="center">
 
-**Course:** ADS-509 : Applied Large Language Models for Data Science  
-**Program:** Master of Applied Data Science, University of San Diego  
-**Project Status:** Completed  
-**Author:** Sushma Kafle
+<img src="./ads509-banner.svg" alt="Steam Review Sentiment Analysis: Machine Learning vs. Transformers" width="100%" />
 
+<br/>
 
-## Project Title
+![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
+![scikit-learn](https://img.shields.io/badge/scikit--learn-F7931E?style=for-the-badge&logo=scikitlearn&logoColor=white)
+![PyTorch](https://img.shields.io/badge/PyTorch-EE4C2C?style=for-the-badge&logo=pytorch&logoColor=white)
+![Hugging Face](https://img.shields.io/badge/Hugging%20Face-FFD21E?style=for-the-badge&logo=huggingface&logoColor=black)
+![Jupyter](https://img.shields.io/badge/Jupyter-F37626?style=for-the-badge&logo=jupyter&logoColor=white)
 
-This project is a part of the ADS-509 course in the Applied Data Science Program at the University of San Diego.
+**ADS 509 · Applied Large Language Models for Data Science**  
+Master of Applied Data Science · University of San Diego  
+**Author:** Sushma Kafle · **Status:** Completed
 
-## Project Introduction / Objective
+</div>
 
-This project investigates how effectively different natural language processing approaches classify Steam game reviews as **positive or negative**. It compares a traditional machine learning baseline (TF-IDF + Logistic Regression), a fine-tuned transformer (DistilBERT) and a zero-shot generative language model (FLAN-T5 Small) on the same held-out test set.
+---
 
-The goal is to evaluate whether more advanced language models improve sentiment classification and whether a generative model can provide useful predictions without task-specific training. These findings can inform how gaming platforms, developers and analysts summarize large volumes of player feedback.
+## 🎯 At a Glance
 
-## Project Description
+Can transformer-based language models better understand player sentiment than traditional text classifiers? This project evaluates **three NLP approaches on the same held-out test set**, using real Steam game reviews and a reproducible machine learning workflow.
 
-### Data source and scope
+| 📚 Reviews | 🎮 Games | 🧪 Test set | 🏆 Best model |
+|:--:|:--:|:--:|:--:|
+| **4,869** | **5** | **731 reviews** | **DistilBERT · 92.61%** |
 
-Reviews were collected using the **Steam Reviews API** for five games spanning different genres and player communities:
+## 📊 Model Performance
 
-- Elden Ring
-- Cyberpunk 2077
-- No Man's Sky
-- Cities: Skylines II
-- Stardew Valley
+| Approach | Model | Held-out test accuracy |
+|---|---|---:|
+| Traditional ML | TF-IDF + Logistic Regression | **87.96%** |
+| Fine-tuned transformer | **DistilBERT** | **92.61%** 🏆 |
+| Zero-shot generative AI | FLAN-T5 Small | **87.96%** |
 
-The collection process used cursor-based pagination and sought a roughly balanced sample of positive and negative recommendations for each game. Reviews were combined, deduplicated using review identifiers, and cleaned. Six predominantly Chinese-language reviews were removed after the API's English-language filter returned some non-English text. The original review text was preserved alongside a normalized text column.
+**Key takeaway:** Fine-tuned DistilBERT outperformed the traditional baseline by **4.65 percentage points**. Notably, zero-shot FLAN-T5 matched the baseline without training on the project's labeled reviews. These results highlight the trade-off between predictive performance and task-specific training effort.
 
-**Final dataset:** 4,869 reviews  **2,453 positive** and **2,416 negative**. Sentiment labels were derived from Steam's user recommendation indicator rather than manually annotated review text.
+## 🔎 Research Questions
 
-### Key data fields
+1. How accurately can **TF-IDF + Logistic Regression** classify player sentiment?
+2. Does fine-tuning **DistilBERT** improve performance?
+3. Can **FLAN-T5 Small** classify reviews using zero-shot instructions alone?
+4. What are the practical trade-offs among traditional ML, fine-tuned transformers, and generative models?
 
-| Field | Description |
-| --- | --- |
-| `review` | Original Steam review text |
-| `clean_review` | Normalized text used for analysis and modeling |
-| `voted_up` | Steam recommendation indicator used to derive sentiment |
-| `recommendationid` | Review identifier used to detect duplicates |
-| Game identifier/name | Identifies which of the five games the review describes |
-| Review word count | Derived feature used in exploratory analysis |
+## 🎮 Data Collection & Preparation
 
-Other Steam API metadata may be present in the raw and intermediate datasets.
+Reviews were collected from the **Steam Reviews API** across five games and diverse player communities:
 
-### Research questions
+| Game | Game | Game | Game | Game |
+|---|---|---|---|---|
+| Elden Ring | Cyberpunk 2077 | No Man's Sky | Cities: Skylines II | Stardew Valley |
 
-1. How well does a traditional TF-IDF and Logistic Regression classifier predict review sentiment?
-2. Does fine-tuning DistilBERT improve classification accuracy?
-3. Can FLAN-T5 Small classify reviews with zero-shot instructions and no task-specific training?
-4. What are the practical trade-offs among these approaches?
+- Used **cursor-based pagination** and targeted approximately balanced positive and negative recommendations.
+- Deduplicated records by `recommendationid`, checked language, and normalized review text while retaining originals.
+- Removed **six predominantly Chinese-language reviews** returned despite the API's English-language filter.
+- Derived labels from Steam's `voted_up` recommendation indicator, **not manual sentiment annotations**.
 
-### Analysis and modeling
+**Final class balance:** 2,453 positive reviews and 2,416 negative reviews.
 
-- **Collection and cleaning:** Steam API requests, cursor pagination, deduplication, language checks, text normalization, and CSV exports.
-- **Exploratory data analysis:** Sentiment distribution by game, review lengths, box plots, and frequent-word comparisons.
-- **Data splitting:** Stratified **70% training / 15% validation / 15% testing** split (3,408 / 730 / 731 reviews).
-- **Model 1:** TF-IDF features with Logistic Regression.
-- **Model 2:** Pretrained `distilbert-base-uncased` fine-tuned for two epochs.
-- **Model 3:** Pretrained `google/flan-t5-small` used for zero-shot sentiment classification through written instructions, without fine-tuning.
-- **Evaluation:** Accuracy, precision, recall, F1-score, and confusion matrices; final comparisons use the same held-out test set.
+### Key fields
 
-### Final results
+| Field | Purpose |
+|---|---|
+| `review` | Original player review |
+| `clean_review` | Normalized modeling text |
+| `voted_up` | Recommendation-based sentiment label |
+| `recommendationid` | Deduplication identifier |
+| Game identifier | Game-level analysis |
+| Review word count | Review-length EDA |
 
-| Model | Test accuracy (731 reviews) |
-| --- | ---: |
-| TF-IDF + Logistic Regression | **87.96%** |
-| Fine-tuned DistilBERT | **92.61%** |
-| FLAN-T5 Small (zero-shot) | **87.96%** |
+## 🧠 Methodology
 
-DistilBERT performed best, exceeding Logistic Regression by **4.65 percentage points**. FLAN-T5 matched the baseline without training on the project's labeled reviews.
-
-### Challenges and limitations
-
-- Training transformer models on a Mac encountered Apple MPS memory constraints; CPU inference was used where necessary.
-- Attempts to fine-tune FLAN-T5 did not yield a reliable result, so the reported FLAN-T5 comparison is **zero-shot only**.
-- Steam recommendation labels may not capture sarcasm, mixed opinions, or nuanced sentiment.
-- Reviews from five games may not represent all Steam titles or gaming communities.
-- Re-running live Steam API collection may retrieve different reviews, so exact results may vary unless the original collected dataset is reused.
-
-## Methods Used
-
-- Natural language processing and text mining
-- Data collection and data cleaning
-- Exploratory data analysis and data visualization
-- Machine learning and predictive modeling
-- Transformer fine-tuning
-- Zero-shot generative AI classification
-- Model evaluation and comparison
-
-## Technologies
-
-- **Language:** Python
-- **Environment:** Jupyter Notebook
-- **Libraries:** pandas, requests, matplotlib, scikit-learn, PyTorch, Hugging Face Transformers, Hugging Face Datasets
-- **Models:** Logistic Regression, DistilBERT, FLAN-T5 Small
-- **Data source:** Steam Reviews API
-
-## Installation and Usage
-
-### 1. Clone the repository
-
-```bash
-git clone https://github.com/YOUR-USERNAME/YOUR-REPOSITORY.git
-cd YOUR-REPOSITORY
+```text
+Steam Reviews API
+       │
+       ▼
+Collection & deduplication
+       │
+       ▼
+Text cleaning & exploratory analysis
+       │
+       ▼
+Stratified split (70% train / 15% validation / 15% test)
+       │
+       ├── TF-IDF + Logistic Regression
+       ├── Fine-tuned DistilBERT (2 epochs)
+       └── Zero-shot FLAN-T5 Small
+       │
+       ▼
+Accuracy · Precision · Recall · F1 · Confusion Matrices
 ```
 
-Replace the placeholders with your actual GitHub repository details.
+**Data split:** 3,408 training / 730 validation / 731 testing reviews. All final reported accuracies are evaluated on the **same held-out test set**.
 
-### 2. Create and activate a Python environment
+### Modeling approaches
+
+- **Baseline:** TF-IDF vectorization with Logistic Regression provides an interpretable, computationally efficient reference.
+- **Transformer:** `distilbert-base-uncased` is fine-tuned for two epochs on labeled training reviews.
+- **Zero-shot LLM:** `google/flan-t5-small` uses natural-language instructions to classify reviews without task-specific fine-tuning.
+
+## 💡 Findings & Interpretation
+
+- **Fine-tuning matters:** DistilBERT delivered the strongest test-set accuracy.
+- **Zero-shot is competitive:** FLAN-T5 Small matched the traditional baseline without training on project labels.
+- **Model choice depends on constraints:** Training time, hardware resources, and inference costs should be weighed alongside accuracy.
+- **Sentiment is nuanced:** Binary recommendation labels can miss sarcasm, mixed opinions, and context-dependent language.
+
+## ⚠️ Challenges & Limitations
+
+- Transformer experiments encountered **Apple MPS memory constraints**; CPU inference was used where needed.
+- Attempts to fine-tune FLAN-T5 did not yield a reliable result; the reported FLAN-T5 experiment is **zero-shot only**.
+- The dataset spans **five games** and may not generalize to every Steam community.
+- Recollecting live API reviews may yield different records and results.
+
+## 🛠️ Tools & Technologies
+
+**Python · pandas · requests · matplotlib · scikit-learn · PyTorch · Hugging Face Transformers · Hugging Face Datasets · Jupyter Notebook**
+
+## 🚀 Run the Project
 
 ```bash
+git clone https://github.com/Sushma-Kafle/ADS_509_Final_Project.git
+cd ADS_509_Final_Project
 python3 -m venv .venv
-source .venv/bin/activate
-```
-
-On Windows, activate with `.venv\Scripts\activate` instead.
-
-### 3. Install dependencies
-
-```bash
+source .venv/bin/activate   # Windows: .venv\Scripts\activate
 python -m pip install --upgrade pip
 python -m pip install jupyter pandas requests matplotlib scikit-learn torch transformers datasets
-```
-
-Package versions and PyTorch acceleration support may vary by operating system. An internet connection is required for Steam API collection and first-time downloads of pretrained Hugging Face models.
-
-### 4. Run the notebook
-
-```bash
 jupyter notebook
 ```
 
-Open the final project notebook (`Final_Project.ipynb`, or its actual filename in the repository) and run cells in order. The notebook collects and saves API data under `data/steam/`, performs cleaning and EDA, trains/evaluates the classifiers, and saves the fine-tuned DistilBERT model locally.
+Open **`Final_Project.ipynb`** and run the cells in order. The notebook handles Steam API collection, data cleaning, EDA, model training, and evaluation.
 
-**Reproducibility note:** The notebook includes live API requests and model training. Running it from the beginning may take significant time and may not recreate the exact dataset or accuracy values shown above. To reproduce the reported analysis more closely, reuse the original cleaned dataset if it is provided with the repository and start from the relevant data-loading stage after adjusting notebook paths.
+> **Reproducibility note:** The repository contains the notebook and README, but not the generated dataset or trained model artifacts. Re-running live collection requires internet access and may produce a different sample. Transformer downloads and training can take time.
 
-### 5. Edit or extend
+## 📁 Repository Structure
 
-Modify notebook cells to change game IDs, data collection targets, preprocessing, model hyperparameters, or evaluation plots. Keep training, validation, and test data separate when experimenting with models.
+```text
+ADS_509_Final_Project/
+├── Final_Project.ipynb   # End-to-end analysis and modeling
+├── README.md            # Project documentation
+└── .gitignore
+```
 
-## Repository Files
+## 🔭 Future Directions
 
-- `Final_Project.ipynb` : data collection, EDA, model training, and evaluation notebook (rename the final notebook to this before pushing, if desired).
-- `README.md` : project documentation.
-- `data/steam/` : generated raw and cleaned data files, if included.
-- Saved model folders and intermediate outputs : generated locally; large files need not be committed.
+Explore more game genres, test robustness across individual games, evaluate additional transformer architectures, and examine errors in nuanced or sarcastic reviews. Consider deployment-oriented comparisons of inference latency and compute requirements.
 
-## Contributors
+## 🙌 Acknowledgments
 
-**Sushma Kafle** : individual project.
+Developed as an individual project for the **University of San Diego Master of Applied Data Science** program. Thanks to Valve/Steam for the review API and the open-source scikit-learn, PyTorch, and Hugging Face communities. AI assistance supported troubleshooting and documentation; technical outputs were reviewed during project development.
 
-## License
-
-No license has been selected yet. **All rights reserved** unless a license is explicitly added. If an open-source license is desired, add a `LICENSE` file and update this section.
-
-## Acknowledgments
-
-Thanks to the University of San Diego Applied Data Science program for the course framework; Valve/Steam for providing review data through its API; and the open-source Python, scikit-learn, PyTorch and Hugging Face communities. An AI assistant was used to support troubleshooting, clarify technical issues and organize the analysis; suggestions and model outputs were checked during the project.
+**License:** No license has been selected. All rights reserved unless a license is added.
