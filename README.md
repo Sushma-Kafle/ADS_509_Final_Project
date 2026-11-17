@@ -41,7 +41,7 @@ Can transformer-based language models better understand player sentiment than tr
 1. How accurately can **TF-IDF + Logistic Regression** classify player sentiment?
 2. Does fine-tuning **DistilBERT** improve performance?
 3. Can **FLAN-T5 Small** classify reviews using zero-shot instructions alone?
-4. What are the practical trade-offs among traditional ML, fine-tuned transformers, and generative models?
+4. What are the practical trade-offs among traditional ML, fine-tuned transformers and generative models?
 
 ## 🎮 Data Collection & Preparation
 
@@ -52,7 +52,7 @@ Reviews were collected from the **Steam Reviews API** across five games and dive
 | Elden Ring | Cyberpunk 2077 | No Man's Sky | Cities: Skylines II | Stardew Valley |
 
 - Used **cursor-based pagination** and targeted approximately balanced positive and negative recommendations.
-- Deduplicated records by `recommendationid`, checked language, and normalized review text while retaining originals.
+- Deduplicated records by `recommendationid`, checked language and normalized review text while retaining originals.
 - Removed **six predominantly Chinese-language reviews** returned despite the API's English-language filter.
 - Derived labels from Steam's `voted_up` recommendation indicator, **not manual sentiment annotations**.
 
@@ -103,8 +103,8 @@ Accuracy · Precision · Recall · F1 · Confusion Matrices
 
 - **Fine-tuning matters:** DistilBERT delivered the strongest test-set accuracy.
 - **Zero-shot is competitive:** FLAN-T5 Small matched the traditional baseline without training on project labels.
-- **Model choice depends on constraints:** Training time, hardware resources, and inference costs should be weighed alongside accuracy.
-- **Sentiment is nuanced:** Binary recommendation labels can miss sarcasm, mixed opinions, and context-dependent language.
+- **Model choice depends on constraints:** Training time, hardware resources and inference costs should be weighed alongside accuracy.
+- **Sentiment is nuanced:** Binary recommendation labels can miss sarcasm, mixed opinions and context-dependent language.
 
 ## ⚠️ Challenges & Limitations
 
@@ -129,7 +129,7 @@ python -m pip install jupyter pandas requests matplotlib scikit-learn torch tran
 jupyter notebook
 ```
 
-Open **`Final_Project.ipynb`** and run the cells in order. The notebook handles Steam API collection, data cleaning, EDA, model training, and evaluation.
+Open **`Final_Project.ipynb`** and run the cells in order. The notebook handles Steam API collection, data cleaning, EDA, model training and evaluation.
 
 > **Reproducibility note:** The repository contains the notebook and README, but not the generated dataset or trained model artifacts. Re-running live collection requires internet access and may produce a different sample. Transformer downloads and training can take time.
 
@@ -144,10 +144,10 @@ ADS_509_Final_Project/
 
 ## 🔭 Future Directions
 
-Explore more game genres, test robustness across individual games, evaluate additional transformer architectures, and examine errors in nuanced or sarcastic reviews. Consider deployment-oriented comparisons of inference latency and compute requirements.
+Explore more game genres, test robustness across individual games, evaluate additional transformer architectures and examine errors in nuanced or sarcastic reviews. Consider deployment-oriented comparisons of inference latency and compute requirements.
 
 ## 🙌 Acknowledgments
 
-Developed as an individual project for the **University of San Diego Master of Applied Data Science** program. Thanks to Valve/Steam for the review API and the open-source scikit-learn, PyTorch, and Hugging Face communities. AI assistance supported troubleshooting and documentation; technical outputs were reviewed during project development.
+Developed as an individual project for the **University of San Diego Master of Applied Data Science** program. Thanks to Valve/Steam for the review API and the open-source scikit-learn, PyTorch and Hugging Face communities. AI assistance supported troubleshooting and documentation; technical outputs were reviewed during project development.
 
 **License:** No license has been selected. All rights reserved unless a license is added.
